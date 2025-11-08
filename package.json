@@ -13,7 +13,7 @@
     "test:ci": "jest --ci --coverage"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
