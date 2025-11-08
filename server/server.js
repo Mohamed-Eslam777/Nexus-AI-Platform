@@ -19,12 +19,12 @@ const app = express();
 app.set('trust proxy', 1);
 
 // --- Routes ---
-const authRoutes = require('./routes/auth.routes');
-const projectRoutes = require('./routes/project.routes');
-const userRoutes = require('./routes/user.routes');
-const walletRoutes = require('./routes/wallet.routes'); // ⬅️ 1. إضافة راوت المحفظة
-const adminRoutes = require('./routes/admin.routes'); // ⬅️ Admin routes
-const qualificationRoutes = require('./routes/qualification.routes'); // ⬅️ Qualification routes
+const authRoutes = require('./routes/auth.routes.js');
+const projectRoutes = require('./routes/project.routes.js');
+const userRoutes = require('./routes/user.routes.js');
+const walletRoutes = require('./routes/wallet.routes.js');
+const adminRoutes = require('./routes/admin.routes.js');
+const qualificationRoutes = require('./routes/qualification.routes.js');
 
 // Middleware
 app.use(cors());
