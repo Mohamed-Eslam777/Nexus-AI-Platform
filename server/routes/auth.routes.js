@@ -219,11 +219,11 @@ router.put('/change-password', protect, async (req, res) => {
           return res.status(404).json({ msg: 'User not found.' });
       }
 
-      // 1. التحقق من كلمة المرور الحالية
-      const isMatch = await bcrypt.compare(currentPassword, user.password);
-      if (!isMatch) {
-          return res.status(401).json({ msg: 'Incorrect current password.' });
-  D     }
+      // 1. التحقق من كلمة المرور الحالية
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+          return res.status(401).json({ msg: 'Incorrect current password.' });
+      }
 
      // 2. تشفير كلمة المرور الجديدة
      const salt = await bcrypt.genSalt(10);

@@ -183,7 +183,6 @@ router.put('/admin/review/:id', protect, admin, async (req, res) => {
       // Don't fail the entire request, but log the error
       console.warn(`[PAYOUT REVIEW] Notification failed, but payout status was updated`);
     }
-
     // ============================================
     // Send Email Notification to User (Payout Review)
     // ============================================
