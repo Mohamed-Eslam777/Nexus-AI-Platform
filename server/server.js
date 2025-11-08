@@ -11,8 +11,6 @@ console.log('Loaded JWT_SECRET:', process.env.JWT_SECRET ? 'Loaded Successfully'
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const http = require('http');
-const { initializeSocket } = require('./socket');
 
 const app = express();
 
@@ -61,21 +59,21 @@ mongoose
   })
   .catch((err) => {
     console.error('CRITICAL: MongoDB connection error or Mongoose Schema issue:', err.message);
-    // In serverless, we don't exit - error will be handled on first request
+    // In serverless, we don't exit - connection will be attempted on first request
   });
 
-// Create HTTP server and initialize Socket.io (for local development)
-// This will only be used when running locally (npm run dev)
-const server = http.createServer(app);
-initializeSocket(server);
-
-// Export Express app for Vercel serverless function
-module.exports = app;
-
+// Vercel handles the server listening part, so we only listen if run locally
 // This block ensures the server only starts listening when run directly (local dev)
-// and NOT when imported by Vercel (production).
+// and NOT when imported by Vercel (serverless production)
 if (require.main === module) {
+  const http = require('http');
+  const { initializeSocket } = require('./socket');
+  
   const PORT = process.env.PORT || 5000;
+  
+  // Create HTTP server and initialize Socket.io (only for local development)
+  const server = http.createServer(app);
+  initializeSocket(server);
   
   // Use the HTTP server (with Socket.io) for local development
   server.listen(PORT, () => {
@@ -83,6 +81,10 @@ if (require.main === module) {
     console.log(`[LOCAL DEV] Socket.io initialized and ready`);
   });
 }
+
+// Export Express app for Vercel serverless function
+// This must be at the end and outside the conditional block
+module.exports = app;
 
 
 
