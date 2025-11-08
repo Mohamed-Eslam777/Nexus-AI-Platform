@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
 
-// ⬅️ تم "زرع" نفس المفتاح هنا
-const MY_SECRET_KEY = 'your_super_secret_key_for_mohamed_dataannotation_2025';
+// JWT Secret Key is now read from process.env.JWT_SECRET.
 
 const protect = async (req, res, next) => {
   let token;
@@ -12,7 +11,7 @@ const protect = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, MY_SECRET_KEY); // ⬅️ استخدمنا المفتاح المزروع
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.user.id).select('-password');
       next();
     } catch (error) {

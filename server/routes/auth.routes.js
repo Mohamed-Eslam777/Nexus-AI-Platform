@@ -10,8 +10,7 @@ const Submission = require('../models/Submission.model');
 const { sendPasswordResetEmail } = require('../utils/emailSender');
 const rateLimit = require('express-rate-limit');
 
-// ⬅️ تم "زرع" المفتاح هنا بشكل مباشر لتجاوز مشكلة .env
-const MY_SECRET_KEY = 'your_super_secret_key_for_mohamed_dataannotation_2025';
+// JWT Secret Key is now read from process.env.JWT_SECRET.
 
 // ============================================
 // Rate Limiting Configuration
@@ -81,12 +80,12 @@ router.post('/register', registerLimiter, async (req, res) => {
 
       await user.save();
 
-      // 6. إنشاء الـ Token وإرساله
-      const payload = { user: { id: user.id, role: user.role } };
-      jwt.sign(
-          payload,
-          MY_SECRET_KEY, // <-- ⭐️ التعديل الأول
-          { expiresIn: '1h' },
+      // 6. إنشاء الـ Token وإرساله
+      const payload = { user: { id: user.id, role: user.role } };
+      jwt.sign(
+          payload,
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' },
           (err, token) => {
               if (err) throw err;
               
@@ -138,12 +137,12 @@ router.post('/login', authLimiter, async (req, res) => {
       }
 
 
-      // 5. إنشاء الـ Token
-      const payload = { user: { id: user.id, role: user.role } };
-      jwt.sign(
-          payload,
-          MY_SECRET_KEY, // <-- ⭐️ التعديل الثالث (الأصلي)
-          { expiresIn: '1h' },
+      // 5. إنشاء الـ Token
+      const payload = { user: { id: user.id, role: user.role } };
+      jwt.sign(
+          payload,
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' },
           (err, token) => {
               if (err) throw err;
               
@@ -156,10 +155,10 @@ router.post('/login', authLimiter, async (req, res) => {
           }
       );
 
-  } catch (err) {
-      console.error('Login Error:', err.message);
-      res.status(500).send('Server Error');
-  }
+  } catch (err) {
+      console.error('Login/Auth Error:', err.message);
+      res.status(500).send('Server Error');
+  }
 });      
 
 // @route   GET /api/auth/profile
