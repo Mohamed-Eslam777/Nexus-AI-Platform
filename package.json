@@ -7,7 +7,7 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm install --prefix server && npm install --prefix client --legacy-peer-deps && npm run build --prefix client",
+    "build": "npm install --legacy-peer-deps && npm install --prefix client --legacy-peer-deps && npm run build --prefix client",
     "client:install": "npm --prefix client install",
     "test": "jest --watchAll",
     "test:ci": "jest --ci --coverage"
