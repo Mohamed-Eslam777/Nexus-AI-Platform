@@ -34,9 +34,9 @@ const registerLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-// @route   POST /api/auth/register
-// @desc    Register user
-router.post('/register', registerLimiter, async (req, res) => {
+// @route   POST /api/auth/register
+// @desc    Register user
+router.post('/register', /* registerLimiter, */ async (req, res) => {
   try {
       // 1. جلب كل الحقول الجديدة والقديمة من الـ Body
       const { 
@@ -106,9 +106,9 @@ router.post('/register', registerLimiter, async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/login
-// @desc    Authenticate user & get token
-router.post('/login', authLimiter, async (req, res) => {
+// @route   POST /api/auth/login
+// @desc    Authenticate user & get token
+router.post('/login', /* authLimiter, */ async (req, res) => {
   try {
       const { email, password } = req.body;
 
