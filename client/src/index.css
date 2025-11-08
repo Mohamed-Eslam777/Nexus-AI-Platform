@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Custom React-Toastify Theme --- */
+
+/* Success Progress Bar (Emerald) */
+.Toastify__progress-bar--success {
+  background-color: #10b981;
+}
+
+/* Error Progress Bar (Rose) */
+.Toastify__progress-bar--error {
+  background-color: #f43f5e;
+}
+
+/* Info Progress Bar (Blue) */
+.Toastify__progress-bar--info {
+  background-color: #3b82f6;
+}
+
+/* Warning Progress Bar (Amber) */
+.Toastify__progress-bar--warning {
+  background-color: #f59e0b;
+}
+
+/* Default Progress Bar (Slate) */
+.Toastify__progress-bar--default {
+  background-color: #64748b;
+}
+
+/* Optional: Style the close button */
+.Toastify__close-button {
+  color: #cbd5e1; /* slate-300 */
+}
+
+.Toastify__close-button:hover {
+  color: #ffffff;
+}
