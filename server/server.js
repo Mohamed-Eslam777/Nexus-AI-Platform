@@ -53,12 +53,13 @@ if (!MONGODB_URI) {
 
 // Connect to MongoDB (will be cached by Mongoose in serverless environments)
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log('MongoDB connected successfully! 🟢');
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
+  .then(() => console.log('MongoDB connected successfully! 🟢'))
   .catch((err) => {
-    console.error('CRITICAL: MongoDB connection error or Mongoose Schema issue:', err.message);
+    console.error('❌ MONGODB CONNECTION FAILED: ', err.message);
     // In serverless, we don't exit - connection will be attempted on first request
   });
 
