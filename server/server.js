@@ -18,7 +18,11 @@ const app = express();
 // This is critical for express-rate-limit to correctly identify user IPs behind a proxy
 app.set('trust proxy', 1);
 
-// --- Routes ---
+// --- Middleware Setup (must be before routes) ---
+app.use(cors());
+app.use(express.json()); 
+
+// --- Routes --- (Add the required imports here)
 const authRoutes = require('./routes/auth.routes.js');
 const projectRoutes = require('./routes/project.routes.js');
 const userRoutes = require('./routes/user.routes.js');
@@ -26,21 +30,18 @@ const walletRoutes = require('./routes/wallet.routes.js');
 const adminRoutes = require('./routes/admin.routes.js');
 const qualificationRoutes = require('./routes/qualification.routes.js');
 
-// Middleware
-app.use(cors());
-app.use(express.json()); 
-
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'Mohamed DataAnnotation API' });
 });
 
+// --- Route Mounting ---
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/wallet', walletRoutes); // ⬅️ 2. استخدام راوت المحفظة
-app.use('/api/admin', adminRoutes); // ⬅️ Admin routes
-app.use('/api/qualification', qualificationRoutes); // ⬅️ Qualification routes
+app.use('/api/wallet', walletRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/qualification', qualificationRoutes);
 // --- End Routes ---
 
 // Mongo connection
